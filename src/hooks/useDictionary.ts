@@ -10,10 +10,16 @@ const files = [
 ];
 const langs = ["en", "es", "fr", "it"];
 
+function filterDictionary(dictionary: string): string[]
+{
+    return (dictionary.split("\n").filter((word) => word.length === 5));
+}
+
 export default function useDictionary(lang = "en")
 {
     const [assets, error] = useAssets(files);
     const [dictionary, setDictionary] = useState(new Array<string>());
+    const langIndex = langs.indexOf(lang); 
 
     useEffect(() => {
         if (error) {
@@ -21,12 +27,13 @@ export default function useDictionary(lang = "en")
         }
     }, [error]);
     useEffect(() => {
-        const uri = assets?.[langs.indexOf(lang)].localUri;
-        
-        if (!uri)
+        let uri;
+
+        if (langIndex === -1 || !assets || assets.length !== files.length)
             return;
-        readAsStringAsync(uri)
-        .then((data) => setDictionary(data.split("\n")))
+        uri = assets?.[langIndex].localUri!;
+        readAsStringAsync(uri, { encoding: "utf8" })
+        .then((data) => setDictionary(filterDictionary(data)))
         .catch((reason) => console.error(reason));
     }, [assets]);
     return (dictionary);

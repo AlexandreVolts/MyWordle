@@ -4,7 +4,7 @@ import useDictionary from "./src/hooks/useDictionary";
 
 export default function App()
 {
-  const dictionary = useDictionary();
+  const dictionary = useDictionary("fr");
   const [word, setWord] = useState("");
 
   useEffect(() => {
