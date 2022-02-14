@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
+import { Field } from "./src/Field";
 import useDictionary from "./src/hooks/useDictionary";
 
 export default function App()
 {
   const dictionary = useDictionary("fr");
   const [word, setWord] = useState("");
+  const [current, setCurrent] = useState("a");
 
   useEffect(() => {
-    if (!dictionary)
+    if (!dictionary?.length)
       return;
     setWord(dictionary[~~(Math.random() * dictionary.length)]);
   }, [dictionary]);
   
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <Text>{word}</Text>
+      <Field word={word} current={word} />
+      <TextInput autoFocus style={{display: "none"}} />
     </View>
   );
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAssets } from "expo-asset";
 import { readAsStringAsync } from "expo-file-system"
+import { WORD_SIZE } from "../constants";
 
 const files = [
     require(`./../../assets/dictionaries/en.txt`),
@@ -12,7 +13,7 @@ const langs = ["en", "es", "fr", "it"];
 
 function filterDictionary(dictionary: string): string[]
 {
-    return (dictionary.split("\n").filter((word) => word.length === 5));
+    return (dictionary.split("\n").filter((word) => word.length === WORD_SIZE));
 }
 
 export default function useDictionary(lang = "en")
