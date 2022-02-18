@@ -1,5 +1,5 @@
-import { Pressable, StyleSheet, View, Text } from "react-native";
-import { QWERTY_PATTERN } from "./constants";
+import { StyleSheet, View } from "react-native";
+import { KEY_WIDTH, QWERTY_PATTERN } from "./constants";
 import { Key } from "./Key";
 
 interface KeyboardProps
@@ -8,11 +8,11 @@ interface KeyboardProps
 }
 
 export const Keyboard = (props: KeyboardProps) => {
-  const generateRow = (row: string) => Array.from(row).map((key: string) => {
+  const generateRow = (row: string) => Array.from(row).map((key) => {
     return (<Key id={key} onPress={props.onPress} key={key} />);
   });
-  const generateKeyboard = () => QWERTY_PATTERN.map((row: string) => {
-    return (<View style={styles.row}>{generateRow(row)}</View>);
+  const generateKeyboard = () => QWERTY_PATTERN.map((row, index) => {
+    return (<View style={styles.row} key={row}>{generateRow(row)}</View>);
   });
 
   return (
@@ -22,9 +22,9 @@ export const Keyboard = (props: KeyboardProps) => {
 
 const styles = StyleSheet.create({
   container: {
-
+    alignItems: "center",
   },
   row: {
-
+    flexDirection: "row",
   },
 });
